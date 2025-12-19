@@ -1,0 +1,493 @@
+@font-face {
+    font-family: 'Abduction';
+    src: url('assets/fonts/abduction2002.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LEDLight';
+    src: url('assets/fonts/LEDLIGHT.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DEETER';
+    src: url('assets/fonts/DEETER__.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DEETC';
+    src: url('assets/fonts/DEETC___.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'The2K12';
+    src: url('assets/fonts/The2K12.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DEADCRT';
+    src: url('assets/fonts/DEADCRT.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Abduction', 'Arial', sans-serif;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: #000000;
+}
+
+/* Background Video */
+#bgVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    max-height: 100vh;
+    padding: 20px;
+    padding-bottom: 60px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Date Text */
+.date-text {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-style: italic;
+    font-weight: 900;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    animation: fadeInOnly 1s ease-in;
+    z-index: 10;
+    letter-spacing: 2px;
+}
+
+@keyframes fadeInOnly {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Main Text */
+.main-text {
+    font-family: 'DEADCRT', 'The2K12', 'DEETC', 'DEETER', 'LEDLight', 'Abduction', 'Arial', sans-serif;
+    font-size: 4rem;
+    font-weight: normal;
+    color: white;
+    text-align: center;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    margin-bottom: 30px;
+    margin-top: 0;
+    animation: fadeIn 1s ease-in;
+    flex-shrink: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Email Section */
+.email-section {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 500px;
+    flex-shrink: 0;
+}
+
+.email-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding-bottom: 5px;
+}
+
+#emailInput {
+    flex: 1;
+    padding: 8px 0;
+    font-size: 0.85rem;
+    border: none;
+    background: transparent;
+    color: white;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: 'Abduction', 'Arial', sans-serif;
+}
+
+#emailInput::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#emailInput:focus {
+    border-bottom-color: rgba(255, 255, 255, 0.8);
+}
+
+.email-form:focus-within {
+    border-bottom-color: rgba(255, 255, 255, 0.8);
+}
+
+.email-button {
+    padding: 0;
+    font-size: 1.2rem;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+}
+
+.email-button:hover {
+    transform: translateX(3px);
+    opacity: 0.8;
+}
+
+.email-button:active {
+    transform: translateX(5px);
+}
+
+/* WhatsApp Section */
+.whatsapp-section {
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease-in;
+    flex-shrink: 0;
+    text-align: center;
+    max-width: 500px;
+}
+
+.whatsapp-section.hidden {
+    display: none;
+}
+
+.price-info {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    font-family: 'Abduction', 'Arial', sans-serif;
+}
+
+.whatsapp-button {
+    display: inline-block;
+    padding: 0;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #ff0000;
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    text-decoration-color: #ff0000;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: all 0.3s ease;
+    font-family: 'Abduction', 'Arial', sans-serif;
+}
+
+.whatsapp-button:hover {
+    color: #cc0000;
+    text-decoration-color: #cc0000;
+}
+
+/* Manifesto Button */
+.manifesto-button {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.3);
+    text-underline-offset: 3px;
+    transition: all 0.3s ease;
+    z-index: 10;
+    font-family: 'Abduction', 'Arial', sans-serif;
+}
+
+.manifesto-button:hover {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Manifesto Page Styles */
+.manifesto-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    max-height: 100vh;
+    padding: 40px 20px;
+    padding-bottom: 60px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.manifesto-text {
+    max-width: 800px;
+    background: transparent;
+    padding: 0;
+    animation: fadeIn 1s ease-in;
+}
+
+.manifesto-text h2 {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.manifesto-text p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Back Button */
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 0;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.3);
+    text-underline-offset: 3px;
+    transition: all 0.3s ease;
+    z-index: 10;
+    font-family: 'Abduction', 'Arial', sans-serif;
+}
+
+.back-button:hover {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive Design */
+@media (min-width: 1025px) {
+    .date-text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .main-text {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-text {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        padding: 0 20px;
+    }
+
+    .container {
+        padding: 15px;
+        padding-bottom: 50px;
+    }
+
+    .date-text {
+        font-size: 0.9rem;
+        top: 15px;
+    }
+
+    .email-section {
+        max-width: 95%;
+        margin-top: 15px;
+    }
+
+    .email-form {
+        gap: 8px;
+    }
+
+    #emailInput {
+        font-size: 0.9rem;
+        padding: 8px 0;
+    }
+
+    .email-button {
+        font-size: 1.3rem;
+        width: 25px;
+        height: 25px;
+    }
+
+    .price-info {
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+        line-height: 1.6;
+    }
+
+    .whatsapp-button {
+        font-size: 0.8rem;
+    }
+
+    .manifesto-button {
+        font-size: 0.7rem;
+        bottom: 15px;
+    }
+
+    .manifesto-container {
+        padding: 25px 15px;
+        padding-bottom: 50px;
+    }
+
+    .manifesto-text {
+        padding: 20px 15px;
+        margin: 0;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
+
+    .manifesto-text h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .manifesto-text p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .back-button {
+        font-size: 0.85rem;
+        padding: 10px 20px;
+        top: 20px;
+        left: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .date-text {
+        font-size: 0.9rem;
+        top: 10px;
+    }
+
+    .main-text {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        padding: 0 15px;
+        letter-spacing: 1px;
+    }
+
+    .container {
+        padding: 10px;
+        padding-bottom: 45px;
+    }
+
+    .email-section {
+        margin-top: 10px;
+    }
+
+    #emailInput {
+        font-size: 0.85rem;
+    }
+
+    .email-button {
+        font-size: 1.2rem;
+        width: 22px;
+        height: 22px;
+    }
+
+    .price-info {
+        font-size: 0.85rem;
+        margin-bottom: 12px;
+        line-height: 1.6;
+    }
+
+    .whatsapp-button {
+        font-size: 0.75rem;
+    }
+
+    .manifesto-button {
+        font-size: 0.65rem;
+        bottom: 10px;
+    }
+
+    .manifesto-container {
+        padding: 20px 12px;
+        padding-bottom: 45px;
+    }
+
+    .manifesto-text {
+        padding: 15px 12px;
+        margin: 0;
+        max-height: calc(100vh - 90px);
+        overflow-y: auto;
+    }
+
+    .manifesto-text h2 {
+        font-size: 1.5rem;
+    }
+
+    .manifesto-text p {
+        font-size: 0.85rem;
+    }
+}
+

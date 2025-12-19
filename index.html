@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caeras en el desencanto?</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Video -->
+    <video autoplay muted loop id="bgVideo">
+        <source src="assets/video/1218.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Date -->
+    <div class="date-text">23/01/26</div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="main-text">Caeras en el desencanto?</h1>
+        
+        <!-- Email Form -->
+        <div class="email-section">
+            <form id="emailForm" class="email-form">
+                <input 
+                    type="email" 
+                    id="emailInput" 
+                    placeholder="junkmail@mail.com" 
+                    required
+                >
+                <button type="submit" class="email-button">
+                    →
+                </button>
+            </form>
+        </div>
+
+        <!-- WhatsApp Link (hidden initially) -->
+        <div id="whatsappSection" class="whatsapp-section hidden">
+            <p class="price-info">
+                El precio de la RAVE será de 15€ máximo y se reducirá en base al número de asistentes. 
+                Todos los detalles los encontrarás en nuestra comunidad de WhatsApp.
+            </p>
+            <a href="#" id="whatsappLink" target="_blank" class="whatsapp-button">
+                Únete a nuestra comunidad
+            </a>
+        </div>
+    </div>
+
+    <!-- Manifesto Button -->
+    <a href="manifesto.html" class="manifesto-button">Manifesto</a>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
