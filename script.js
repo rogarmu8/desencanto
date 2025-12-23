@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if email was already submitted
     const savedEmail = localStorage.getItem('submittedEmail');
     if (savedEmail) {
+        if (whatsappLink) {
+            whatsappLink.href = 'https://chat.whatsapp.com/HJYnXgmCIOSB71rmLA7OzR';
+        }
         showWhatsAppLink();
     }
 
@@ -39,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     body: JSON.stringify({
                         email: email,
                         apiKey: 'efe08ab385f7ba24a0911c1d9d3f95a2',
-                        referralCode: referralCode // optional
                     })
                 })
                 .then(response => response.json())
@@ -53,9 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     emailForm.style.display = 'none';
                     showWhatsAppLink();
                     
-                    // You can set the WhatsApp community link here
-                    // Replace with your actual WhatsApp community link
-                    const whatsappCommunityLink = 'https://chat.whatsapp.com/YOUR_COMMUNITY_LINK';
+                    // Set the WhatsApp community link
+                    const whatsappCommunityLink = 'https://chat.whatsapp.com/HJYnXgmCIOSB71rmLA7OzR';
                     if (whatsappLink) {
                         whatsappLink.href = whatsappCommunityLink;
                     }
