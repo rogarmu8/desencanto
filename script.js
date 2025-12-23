@@ -19,22 +19,57 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = emailInput.value.trim();
             
             if (email && isValidEmail(email)) {
-                // Save email to localStorage
-                localStorage.setItem('submittedEmail', email);
+                // Get referral code from URL parameters if present
+                const urlParams = new URLSearchParams(window.location.search);
+                const referralCode = urlParams.get('ref') || undefined;
                 
-                // Here you could also send the email to a backend server
-                // For example: sendEmailToServer(email);
-                
-                // Hide form and show WhatsApp link
-                emailForm.style.display = 'none';
-                showWhatsAppLink();
-                
-                // You can set the WhatsApp community link here
-                // Replace with your actual WhatsApp community link
-                const whatsappCommunityLink = 'https://chat.whatsapp.com/YOUR_COMMUNITY_LINK';
-                if (whatsappLink) {
-                    whatsappLink.href = whatsappCommunityLink;
+                // Disable form while submitting
+                const submitButton = emailForm.querySelector('button[type="submit"]');
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = '...';
                 }
+                
+                // Call API to subscribe
+                fetch('https://hypeloop.app/api/subscribe/api-key', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        apiKey: 'efe08ab385f7ba24a0911c1d9d3f95a2',
+                        referralCode: referralCode // optional
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    
+                    // Save email to localStorage on success
+                    localStorage.setItem('submittedEmail', email);
+                    
+                    // Hide form and show WhatsApp link
+                    emailForm.style.display = 'none';
+                    showWhatsAppLink();
+                    
+                    // You can set the WhatsApp community link here
+                    // Replace with your actual WhatsApp community link
+                    const whatsappCommunityLink = 'https://chat.whatsapp.com/YOUR_COMMUNITY_LINK';
+                    if (whatsappLink) {
+                        whatsappLink.href = whatsappCommunityLink;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al procesar tu email. Por favor, intenta de nuevo.');
+                    
+                    // Re-enable form on error
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.textContent = '→';
+                    }
+                });
             } else {
                 alert('Por favor, ingresa un email válido');
             }
