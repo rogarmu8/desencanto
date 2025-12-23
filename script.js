@@ -45,8 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     requestBody.referralCode = referralCode;
                 }
                 
-                // Call API to subscribe - Using simpler /api/subscribe endpoint
-                fetch('https://hypeloop.app/api/subscribe', {
+                // Call API to subscribe - Using /api/v1/subscribe endpoint to avoid redirects
+                fetch('https://hypeloop.app/api/v1/subscribe', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
