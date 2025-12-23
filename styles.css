@@ -111,7 +111,7 @@ body {
 /* Main Text */
 .main-text {
     font-family: 'DEADCRT', 'The2K12', 'DEETC', 'DEETER', 'LEDLight', 'Abduction', 'Arial', sans-serif;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: normal;
     color: white;
     text-align: center;
@@ -215,9 +215,22 @@ body {
 
 .price-info {
     color: rgba(255, 255, 255, 0.7);
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     line-height: 1.8;
+    margin: 20px auto;
     margin-bottom: 20px;
+    text-align: center;
+    max-width: 500px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    font-family: 'Abduction', 'Arial', sans-serif;
+}
+
+.community-info {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    text-align: center;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
     font-family: 'Abduction', 'Arial', sans-serif;
 }
@@ -337,13 +350,13 @@ body {
 
 @media (max-width: 1024px) {
     .main-text {
-        font-size: 3rem;
+        font-size: 2.25rem;
     }
 }
 
 @media (max-width: 768px) {
     .main-text {
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin-bottom: 20px;
         padding: 0 20px;
     }
@@ -379,8 +392,16 @@ body {
     }
 
     .price-info {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
+        margin: 15px auto;
         margin-bottom: 15px;
+        line-height: 1.6;
+        max-width: 95%;
+    }
+
+    .community-info {
+        font-size: 0.85rem;
+        margin-bottom: 12px;
         line-height: 1.6;
     }
 
@@ -430,7 +451,7 @@ body {
     }
 
     .main-text {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
         margin-bottom: 15px;
         padding: 0 15px;
         letter-spacing: 1px;
@@ -456,8 +477,16 @@ body {
     }
 
     .price-info {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
+        margin: 12px auto;
         margin-bottom: 12px;
+        line-height: 1.6;
+        max-width: 95%;
+    }
+
+    .community-info {
+        font-size: 0.75rem;
+        margin-bottom: 10px;
         line-height: 1.6;
     }
 
