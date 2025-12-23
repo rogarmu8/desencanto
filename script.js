@@ -45,15 +45,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     requestBody.referralCode = referralCode;
                 }
                 
-                // Call API to subscribe
-                fetch('https://hypeloop.app/api/subscribe/api-key', {
+                // Call API to subscribe - Using simpler /api/subscribe endpoint
+                fetch('https://hypeloop.app/api/subscribe', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(requestBody),
-                    // Remove redirect: 'follow' - let browser handle redirects normally
-                    // This prevents CORS issues with redirects
                 })
                 .then(async response => {
                     // Check if response is ok
