@@ -1,4 +1,5 @@
-// Email form handling
+// Email form handling - CORRECTED VERSION
+
 document.addEventListener('DOMContentLoaded', function() {
     const emailForm = document.getElementById('emailForm');
     const emailInput = document.getElementById('emailInput');
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (email && isValidEmail(email)) {
                 // Get referral code from URL parameters if present
                 const urlParams = new URLSearchParams(window.location.search);
-                const referralCode = urlParams.get('ref') || undefined;
+                const referralCode = urlParams.get('ref') || null;
                 
                 // Disable form while submitting
                 const submitButton = emailForm.querySelector('button[type="submit"]');
@@ -33,17 +34,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     submitButton.textContent = '...';
                 }
                 
+                // Prepare request body
+                const requestBody = {
+                    email: email,
+                    apiKey: 'efe08ab385f7ba24a0911c1d9d3f95a2',
+                };
+                
+                // Add referralCode only if it exists
+                if (referralCode) {
+                    requestBody.referralCode = referralCode;
+                }
+                
                 // Call API to subscribe
                 fetch('https://hypeloop.app/api/subscribe/api-key', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        email: email,
-                        apiKey: 'efe08ab385f7ba24a0911c1d9d3f95a2',
-                    }),
-                    redirect: 'follow' // Follow redirects
+                    body: JSON.stringify(requestBody),
+                    // Remove redirect: 'follow' - let browser handle redirects normally
+                    // This prevents CORS issues with redirects
                 })
                 .then(async response => {
                     // Check if response is ok
@@ -53,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         try {
                             errorData = await response.json();
                         } catch (e) {
-                            errorData = { error: 'Network error' };
+                            errorData = { error: `HTTP error! status: ${response.status}` };
                         }
                         throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
                     }
@@ -78,32 +88,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 .catch(error => {
                     console.error('Error:', error);
                     
-                    // If it's a CORS error, proceed anyway (API is for tracking)
-                    // The email is already validated client-side
-                    if (error.message.includes('CORS') || error.message.includes('NetworkError') || error.name === 'TypeError') {
-                        console.warn('CORS error, proceeding anyway...');
-                        
-                        // Save email to localStorage
-                        localStorage.setItem('submittedEmail', email);
-                        
-                        // Hide form and show WhatsApp link
-                        emailForm.style.display = 'none';
-                        showWhatsAppLink();
-                        
-                        // Set the WhatsApp community link
-                        const whatsappCommunityLink = 'https://chat.whatsapp.com/HJYnXgmCIOSB71rmLA7OzR';
-                        if (whatsappLink) {
-                            whatsappLink.href = whatsappCommunityLink;
-                        }
-                    } else {
-                        // For other errors, show alert
-                        alert('Error al procesar tu email. Por favor, intenta de nuevo.');
-                        
-                        // Re-enable form on error
-                        if (submitButton) {
-                            submitButton.disabled = false;
-                            submitButton.textContent = '→';
-                        }
+                    // Show user-friendly error message
+                    alert('Error al procesar tu email. Por favor, intenta de nuevo.');
+                    
+                    // Re-enable form on error
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.textContent = '→';
                     }
                 });
             } else {
