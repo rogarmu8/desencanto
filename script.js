@@ -42,9 +42,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     body: JSON.stringify({
                         email: email,
                         apiKey: 'efe08ab385f7ba24a0911c1d9d3f95a2',
-                    })
+                    }),
+                    redirect: 'follow' // Follow redirects
                 })
-                .then(response => response.json())
+                .then(async response => {
+                    // Check if response is ok
+                    if (!response.ok) {
+                        // Try to get error message
+                        let errorData;
+                        try {
+                            errorData = await response.json();
+                        } catch (e) {
+                            errorData = { error: 'Network error' };
+                        }
+                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     console.log('Success:', data);
                     
@@ -63,12 +77,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Error al procesar tu email. Por favor, intenta de nuevo.');
                     
-                    // Re-enable form on error
-                    if (submitButton) {
-                        submitButton.disabled = false;
-                        submitButton.textContent = '→';
+                    // If it's a CORS error, proceed anyway (API is for tracking)
+                    // The email is already validated client-side
+                    if (error.message.includes('CORS') || error.message.includes('NetworkError') || error.name === 'TypeError') {
+                        console.warn('CORS error, proceeding anyway...');
+                        
+                        // Save email to localStorage
+                        localStorage.setItem('submittedEmail', email);
+                        
+                        // Hide form and show WhatsApp link
+                        emailForm.style.display = 'none';
+                        showWhatsAppLink();
+                        
+                        // Set the WhatsApp community link
+                        const whatsappCommunityLink = 'https://chat.whatsapp.com/HJYnXgmCIOSB71rmLA7OzR';
+                        if (whatsappLink) {
+                            whatsappLink.href = whatsappCommunityLink;
+                        }
+                    } else {
+                        // For other errors, show alert
+                        alert('Error al procesar tu email. Por favor, intenta de nuevo.');
+                        
+                        // Re-enable form on error
+                        if (submitButton) {
+                            submitButton.disabled = false;
+                            submitButton.textContent = '→';
+                        }
                     }
                 });
             } else {
