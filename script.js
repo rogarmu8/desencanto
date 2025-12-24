@@ -1,10 +1,11 @@
-// Email form handling - CORRECTED VERSION
+// Email form handling - Using Hypeloop Embed
 
 document.addEventListener('DOMContentLoaded', function() {
     const emailForm = document.getElementById('emailForm');
     const emailInput = document.getElementById('emailInput');
     const whatsappSection = document.getElementById('whatsappSection');
     const whatsappLink = document.getElementById('whatsappLink');
+    const hypeloopWidget = document.getElementById('hypeloop-widget');
 
     // Check if email was already submitted
     const savedEmail = localStorage.getItem('submittedEmail');
@@ -15,6 +16,44 @@ document.addEventListener('DOMContentLoaded', function() {
         showWhatsAppLink();
     }
 
+    // Function to find elements in the Hypeloop embed
+    function findHypeloopElements() {
+        if (!hypeloopWidget) return null;
+        
+        // Try to find input and submit button in the embed
+        // The embed structure may vary, so we'll try multiple selectors
+        const input = hypeloopWidget.querySelector('input[type="email"]') || 
+                     hypeloopWidget.querySelector('input[type="text"]') ||
+                     hypeloopWidget.querySelector('input');
+        
+        const submitButton = hypeloopWidget.querySelector('button[type="submit"]') ||
+                            hypeloopWidget.querySelector('button') ||
+                            hypeloopWidget.querySelector('input[type="submit"]');
+        
+        const form = hypeloopWidget.querySelector('form');
+        
+        return { input, submitButton, form };
+    }
+
+    // Wait for Hypeloop embed to load
+    function waitForHypeloopEmbed(callback, maxAttempts = 50) {
+        let attempts = 0;
+        
+        const checkInterval = setInterval(() => {
+            attempts++;
+            const elements = findHypeloopElements();
+            
+            if (elements && elements.input && (elements.submitButton || elements.form)) {
+                clearInterval(checkInterval);
+                callback(elements);
+            } else if (attempts >= maxAttempts) {
+                clearInterval(checkInterval);
+                console.warn('Hypeloop embed did not load in time');
+                callback(null);
+            }
+        }, 100);
+    }
+
     // Handle form submission
     if (emailForm) {
         emailForm.addEventListener('submit', function(e) {
@@ -23,10 +62,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = emailInput.value.trim();
             
             if (email && isValidEmail(email)) {
-                // Get referral code from URL parameters if present
-                const urlParams = new URLSearchParams(window.location.search);
-                const referralCode = urlParams.get('ref') || null;
-                
                 // Disable form while submitting
                 const submitButton = emailForm.querySelector('button[type="submit"]');
                 if (submitButton) {
@@ -34,71 +69,55 @@ document.addEventListener('DOMContentLoaded', function() {
                     submitButton.textContent = '...';
                 }
                 
-                // Prepare request body
-                const requestBody = {
-                    email: email,
-                    apiKey: 'efe08ab385f7ba24a0911c1d9d3f95a2',
-                };
-                
-                // Add referralCode only if it exists
-                if (referralCode) {
-                    requestBody.referralCode = referralCode;
-                }
-                
-                // Call API to subscribe - Using /api/v1/subscribe endpoint to avoid redirects
-                fetch('https://hypeloop.app/api/v1/subscribe', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestBody),
-                })
-                .then(async response => {
-                    // Check if response is ok
-                    if (!response.ok) {
-                        // Try to get error message
-                        let errorData;
-                        try {
-                            errorData = await response.json();
-                        } catch (e) {
-                            errorData = { error: `HTTP error! status: ${response.status}` };
-                        }
-                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                // Wait for embed and submit
+                waitForHypeloopEmbed(function(elements) {
+                    if (!elements || !elements.input) {
+                        console.error('Could not find Hypeloop embed elements');
+                        // Fallback: proceed anyway
+                        handleSuccess(email);
+                        return;
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Success:', data);
                     
-                    // Save email to localStorage on success
-                    localStorage.setItem('submittedEmail', email);
+                    // Set the email in the embed input
+                    elements.input.value = email;
                     
-                    // Hide form and show WhatsApp link
-                    emailForm.style.display = 'none';
-                    showWhatsAppLink();
+                    // Trigger input event to ensure the embed recognizes the change
+                    elements.input.dispatchEvent(new Event('input', { bubbles: true }));
+                    elements.input.dispatchEvent(new Event('change', { bubbles: true }));
                     
-                    // Set the WhatsApp community link
-                    const whatsappCommunityLink = 'https://chat.whatsapp.com/HJYnXgmCIOSB71rmLA7OzR';
-                    if (whatsappLink) {
-                        whatsappLink.href = whatsappCommunityLink;
+                    // Submit the embed form
+                    if (elements.form) {
+                        elements.form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                    } else if (elements.submitButton) {
+                        elements.submitButton.click();
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
                     
-                    // Show user-friendly error message
-                    alert('Error al procesar tu email. Por favor, intenta de nuevo.');
-                    
-                    // Re-enable form on error
-                    if (submitButton) {
-                        submitButton.disabled = false;
-                        submitButton.textContent = '→';
-                    }
+                    // Wait a bit and then proceed (embed handles submission asynchronously)
+                    setTimeout(() => {
+                        handleSuccess(email);
+                    }, 500);
                 });
             } else {
                 alert('Por favor, ingresa un email válido');
             }
         });
+    }
+
+    function handleSuccess(email) {
+        // Save email to localStorage
+        localStorage.setItem('submittedEmail', email);
+        
+        // Hide form and show WhatsApp link
+        if (emailForm) {
+            emailForm.style.display = 'none';
+        }
+        showWhatsAppLink();
+        
+        // Set the WhatsApp community link
+        const whatsappCommunityLink = 'https://chat.whatsapp.com/HJYnXgmCIOSB71rmLA7OzR';
+        if (whatsappLink) {
+            whatsappLink.href = whatsappCommunityLink;
+        }
     }
 
     function showWhatsAppLink() {

@@ -256,6 +256,27 @@ body {
     text-decoration-color: #cc0000;
 }
 
+/* Hidden Hypeloop Embed */
+.hypeloop-hidden {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+#hypeloop-widget {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
 /* Manifesto Button */
 .manifesto-button {
     position: fixed;
@@ -283,7 +304,7 @@ body {
 /* Manifesto Page Styles */
 .manifesto-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     height: 100vh;
     max-height: 100vh;
@@ -291,14 +312,17 @@ body {
     padding-bottom: 60px;
     position: relative;
     z-index: 1;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
 }
 
 .manifesto-text {
     max-width: 800px;
     background: transparent;
     padding: 0;
+    padding-top: 20px;
     animation: fadeIn 1s ease-in;
 }
 
@@ -316,6 +340,22 @@ body {
     line-height: 1.8;
     margin-bottom: 20px;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.manifesto-video-container {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#manifestoVideo {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    background: #000;
 }
 
 /* Back Button */
@@ -420,10 +460,9 @@ body {
     }
 
     .manifesto-text {
-        padding: 20px 15px;
+        padding: 15px 0;
+        padding-top: 20px;
         margin: 0;
-        max-height: calc(100vh - 100px);
-        overflow-y: auto;
     }
 
     .manifesto-text h2 {
@@ -434,6 +473,10 @@ body {
     .manifesto-text p {
         font-size: 0.95rem;
         line-height: 1.6;
+    }
+
+    .manifesto-video-container {
+        margin-top: 30px;
     }
 
     .back-button {
@@ -505,10 +548,9 @@ body {
     }
 
     .manifesto-text {
-        padding: 15px 12px;
+        padding: 12px 0;
+        padding-top: 15px;
         margin: 0;
-        max-height: calc(100vh - 90px);
-        overflow-y: auto;
     }
 
     .manifesto-text h2 {
@@ -517,6 +559,10 @@ body {
 
     .manifesto-text p {
         font-size: 0.85rem;
+    }
+
+    .manifesto-video-container {
+        margin-top: 25px;
     }
 }
 

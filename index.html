@@ -8,7 +8,7 @@
 </head>
 <body>
     <!-- Background Video -->
-    <video autoplay loop id="bgVideo">
+    <video autoplay muted loop id="bgVideo">
         <source src="assets/video/1218.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
@@ -54,7 +54,18 @@
     <!-- Manifesto Button -->
     <a href="manifesto.html" class="manifesto-button">Manifesto</a>
 
+    <!-- Hidden Hypeloop Embed -->
+    <div id="hypeloop-widget" class="hypeloop-hidden"></div>
+
     <script src="script.js"></script>
+    <script>
+      (function() {
+        const script = document.createElement('script');
+        script.src = 'https://www.hypeloop.app/api/embed/desencanto-mfzz5/script.js?theme=dark';
+        script.async = true;
+        document.body.appendChild(script);
+      })();
+    </script>
 </body>
 </html>
 
